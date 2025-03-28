@@ -8,7 +8,7 @@ get_header();
             echo '<p>'.category_description().'</p>';
             ?>
         </div>
-         <img src="<?php echo get_random_post_image(get_queried_object_id()); ?>" alt="Random Image">;
+         <img src="<?php echo get_random_post_image(get_queried_object_id()); ?>" alt="Random Image">
     </section>
     <main>
         <section class="products">
