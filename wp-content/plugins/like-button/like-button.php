@@ -65,11 +65,14 @@ function like_button( $atts ): string {
 		$icon = 'thumbs-up-outline';
 	}
 
+	$nonce = wp_create_nonce('like_form_nonce');
+	
 	$output = '<form id="like-form" method="post" action="' . admin_url( 'admin-post.php' ) . '">';
 	$output .= '<input type="hidden" name="action" value="add_like">';
 	$output .= '<input id="post_id" type="hidden" name="post_id" value="' . $post_id . '">';
 	$output .= '<button id="like-button" type="submit"><ion-icon name="' . $icon . '"></ion-icon></button>';
 	$output .= '<span id="like-count">' . $likes . '</span>';
+	$output .= '<input type="hidden" name="like_form_nonce" value="' . $nonce . '">';
 	$output .= '</form>';
 
 	return $output;
@@ -81,6 +84,10 @@ add_shortcode( 'like_button', 'like_button' );
 
 function add_like(): void {
 	global $wpdb;
+
+	if (!isset($_POST['like_form_nonce']) || !wp_verify_nonce($_POST['like_form_nonce'], 'like_form_nonce')) {
+		wp_die('Nonce verification failed!');
+	}
 
 	$table_name = $wpdb->prefix . 'likes';
 
@@ -164,6 +171,7 @@ function like_button_enqueue_scripts(): void {
 	wp_register_script( 'like-button', plugin_dir_url( __FILE__ ) . '/like-button.js', [], '1.0', true );
 	$script_data = array(
 		'ajax_url' => admin_url( 'admin-ajax.php' ),
+		'nonce' => wp_create_nonce( 'like_form_nonce' ),
 	);
 	wp_localize_script( 'like-button', 'likeButton', $script_data );
 	wp_enqueue_script( 'like-button' );

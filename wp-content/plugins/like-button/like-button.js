@@ -1,15 +1,16 @@
+'use strict';
 
 const likeForm = document.querySelector('#like-form');
-// kun like form lähetetään
+
+if (likeForm) {
 likeForm.addEventListener('submit', async (evt) => {
     evt.preventDefault()
-    // hae postin id (input hidden)
     const postId = document.querySelector('#post_id').value;
-    // lähetä id ajaxilla (muista action)
     const url = likeButton.ajax_url;
     const data = new URLSearchParams({
         action: 'add_like',
         post_id: postId,
+        like_form_nonce: likeButton.nonce,
     });
     const response = await fetch(url, {
         method: 'POST',
@@ -22,3 +23,7 @@ likeForm.addEventListener('submit', async (evt) => {
     console.log(like);
     likeForm.innerHTML = like;
 })
+}
+else {
+    console.log('Like form not found');
+}
