@@ -149,6 +149,7 @@ $RECYCLE.BIN/
 /wp-content/index.php
 /wp-content/languages
 /wp-content/plugins/index.php
+/wp-content/plugins/ai1wm-backups/*
 /wp-content/themes/index.php
 /wp-includes/
 /index.php
@@ -156,6 +157,7 @@ $RECYCLE.BIN/
 /readme.html
 /wp-*.php
 /xmlrpc.php
+
 
 # Configuration
 wp-config.php
