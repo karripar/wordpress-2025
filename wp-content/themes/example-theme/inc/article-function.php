@@ -19,7 +19,8 @@ function generate_articles($products)
                     <?php echo substr($excerpt, 0, 50); ?>...
                 </p>
 
-                <a href="<?php the_permalink(); ?>">Read more</a>
+                <a href="<?php echo get_permalink(); ?>">Read more</a>
+                <a href="#" class="open-modal" data-id="<?php echo get_the_ID();?>">Open modal</a>
             </article>
             <?php
         endwhile;
